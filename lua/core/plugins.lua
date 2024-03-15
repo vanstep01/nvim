@@ -12,6 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    { 'stevearc/oil.nvim' },
     { "kylechui/nvim-surround", event="VeryLazy" },
     { "epwalsh/obsidian.nvim" },
     {
@@ -82,6 +83,5 @@ require("lazy").setup({
 	{ "windwp/nvim-autopairs" },
 	{ "numToStr/Comment.nvim" },
 	{ "windwp/nvim-ts-autotag" },
-	{ "nvim-tree/nvim-tree.lua" },
 	{ "hrsh7th/cmp-nvim-lsp-signature-help" },
 })

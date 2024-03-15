@@ -37,8 +37,8 @@ map('n', '<C-S-j>', '<C-w>-')
 map('n', '<C-S-k>', '<C-w>+')
 map('n', '<C-S-l>', '<C-w>>')
 
--- NvimTree
-map("n", "<leader>e", ":NvimTreeFindFile!<CR>")
+-- Oil
+map("n", "<leader>e", require("oil").open_float)
 
 -- Other
 map("n", "<leader>q", ":q<CR>")
