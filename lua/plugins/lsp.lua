@@ -1,7 +1,14 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local servers = { "tsserver", "cssls", "eslint", "lua_ls", "gopls" }
+local servers = {
+  "tsserver",
+  "cssls",
+  "eslint",
+  "lua_ls",
+  "gopls",
+  "svelte",
+}
 
 local lspconfig = require('lspconfig')
 for _, server in pairs(servers) do
@@ -9,6 +16,28 @@ for _, server in pairs(servers) do
         capabilities = capabilities
     }
 end
+
+lspconfig.svelte.setup {
+  filetypes = { "svelte" },
+  on_attach = function(client, bufnr)
+    if client.name == 'svelte' then
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = { "*.js", "*.ts", "*.svelte" },
+        callback = function(ctx)
+          client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+        end,
+      })
+    end
+    if vim.bo[bufnr].filetype == "svelte" then
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        pattern = { "*.js", "*.ts", "*.svelte" },
+        callback = function(ctx)
+          client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+        end,
+      })
+    end
+  end
+}
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
